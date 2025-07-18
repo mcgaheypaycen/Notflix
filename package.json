@@ -1,0 +1,119 @@
+{
+  "name": "notflix",
+  "version": "1.0.0",
+  "description": "Notflix - A Netflix-style media player for local video files",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "dev:vite": "vite",
+    "dev:electron": "tsc -p tsconfig.electron.json && electron .",
+    "build": "npm run build:vite && npm run build:electron && npm run copy-user-guide",
+    "build:vite": "vite build",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "copy-user-guide": "copy USER_GUIDE.md dist\\",
+    "generate-icons": "node generate-icons.js",
+    "pre-dist": "npm run build && node verify-build.js",
+    "dist": "npm run pre-dist && npm run generate-icons && electron-builder",
+    "start": "electron ."
+  },
+  "keywords": [
+    "media-player",
+    "notflix",
+    "electron",
+    "react"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.21",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/sharp": "^0.32.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.0",
+    "concurrently": "^8.2.2",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.0.0",
+    "electron-icon-builder": "^2.0.1",
+    "fluent-ffmpeg": "^2.1.3",
+    "postcss": "^8.4.0",
+    "sharp": "^0.32.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0",
+    "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^2.1.2",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "build": {
+    "appId": "com.notflix.mediaplayer",
+    "productName": "Notflix",
+    "directories": {
+      "output": "dist-release"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "USER_GUIDE.md",
+        "to": "USER_GUIDE.md"
+      }
+    ],
+    "icon": "build/icons/icon.ico",
+    "win": {
+      "target": "nsis",
+      "artifactName": "Notflix-Setup-${version}.exe",
+      "icon": "build/icons/icon.ico",
+      "requestedExecutionLevel": "asInvoker",
+      "publisherName": "Notflix Media Player",
+      "verifyUpdateCodeSignature": false,
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Notflix",
+      "installerIcon": "build/icons/icon.ico",
+      "uninstallerIcon": "build/icons/icon.ico",
+      "installerHeaderIcon": "build/icons/icon.ico",
+      "deleteAppDataOnUninstall": true
+    },
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "icon": "build/icons/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/icons/1024x1024.png"
+    },
+    "asarUnpack": [
+      "node_modules/fluent-ffmpeg/**/*",
+      "node_modules/@ffmpeg-installer/**/*",
+      "node_modules/@ffprobe-installer/**/*",
+      "node_modules/ffmpeg-static/**/*",
+      "node_modules/fluent-ffmpeg"
+    ],
+    "compression": "maximum",
+    "removePackageScripts": true,
+    "removePackageKeywords": true,
+    "forceCodeSigning": false,
+    "cscLink": null,
+    "cscKeyPassword": null,
+    "npmRebuild": false,
+    "buildDependenciesFromSource": false,
+    "electronVersion": "27.0.0",
+    "electronDownload": {
+      "cache": "./electron-cache"
+    }
+  }
+}
