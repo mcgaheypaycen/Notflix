@@ -2,7 +2,7 @@
 
 A beautiful Netflix-style desktop media player for your local video files. Notflix transforms your personal video collection into a premium streaming experience with automatic thumbnail generation, metadata extraction, and a familiar Netflix-like interface.
 
-![Notflix Screenshot](https://via.placeholder.com/800x450/141414/ffffff?text=Notflix+Screenshot)
+Warning: This app was 100% pure vibecoded by some gay dude who hasn't written a line of code since Myspace. Use at your own risk.
 
 ## ✨ Features
 
